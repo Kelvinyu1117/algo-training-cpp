@@ -52,10 +52,19 @@ string eval(string a, string b, char op) {
     }
 }
 
+string toUpper(string s) {
+    string res;
+    for(auto c: s) {
+        res += toupper(c);
+    }
+
+    return res;
+}
+
 int main()
 {
     string str;
-    while(cin >> str && !cin.eof()) {
+    while(cin >> str) {
         stack<string> oprands;
         stack<char> s;
         s.push('@');
@@ -98,7 +107,7 @@ int main()
             s.pop();
         }
         
-       cout << oprands.top() << endl;
+       cout << toUpper(oprands.top()) << endl;
     }
 
     return 0;
