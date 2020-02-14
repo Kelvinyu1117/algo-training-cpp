@@ -2,7 +2,7 @@
 
 using namespace std;
 
-char kingdom[55][55];
+char kingdom[100][100];
 
 // m = # of rows, n = # of columns
 int dfs(int m, int n, int i, int j) {
@@ -13,68 +13,48 @@ int dfs(int m, int n, int i, int j) {
     
     int sum = 0;
     // six direction for hexagon
-    
-    if(i == 0) {
-        if(j - 1 >= 0 && kingdom[i][j - 1] == '.')
-            sum++;
-            
-        if(j + 1 < n && kingdom[i][j + 1] == '.')
-            sum++;
-            
-        if(i + 1 < m && j - 1 >= 0 && kingdom[i + 1][j - 1] == '.')
-            sum++;
-            
-        if(i + 1 < m && j + 1 < n && kingdom[i + 1][j] == '.')
-            sum++;
-            
-        sum += dfs(m, n, i - 1, j - 1);
-        sum += dfs(m, n, i - 1, j + 1);
-        sum += dfs(m, n, i, j - 1);
-        sum += dfs(m, n, i, j);
-    }else if(i == m - 1) {
+    if(i % 2 == 0) {
         if(i - 1 >= 0 && j - 1 >= 0 && kingdom[i - 1][j - 1] == '.')
             sum++;
-            
-        if(i - 1 >= 0 && j + 1 < n && kingdom[i - 1][j] == '.')
+        if(i - 1 >= 0 && kingdom[i - 1][j] == '.')
             sum++;
-            
         if(j - 1 >= 0 && kingdom[i][j - 1] == '.')
             sum++;
-            
         if(j + 1 < n && kingdom[i][j + 1] == '.')
             sum++;
-        
+        if(i + 1 < m && j - 1 >= 0 && kingdom[i + 1][j - 1] == '.')
+            sum++;
+        if(i + 1 < m && kingdom[i + 1][j] == '.')
+            sum++;
+            
         sum += dfs(m, n, i - 1, j - 1);
         sum += dfs(m, n, i - 1, j);
         sum += dfs(m, n, i, j - 1);
         sum += dfs(m, n, i, j + 1);
+        sum += dfs(m, n, i + 1, j - 1);
+        sum += dfs(m, n, i + 1, j);
     }else {
-        if(i - 1 >= 0 && j - 1 >= 0 && kingdom[i - 1][j - 1] == '.')
+        
+        if(i - 1 >= 0 && kingdom[i - 1][j] == '.')
             sum++;
-            
         if(i - 1 >= 0 && j + 1 < n && kingdom[i - 1][j + 1] == '.')
             sum++;
-            
         if(j - 1 >= 0 && kingdom[i][j - 1] == '.')
             sum++;
-            
         if(j + 1 < n && kingdom[i][j + 1] == '.')
             sum++;
-            
-        if(i + 1 < m && j - 1 >= 0 && kingdom[i + 1][j - 1] == '.')
+        if(i + 1 < m && kingdom[i + 1][j] == '.')
             sum++;
-            
         if(i + 1 < m && j + 1 < n && kingdom[i + 1][j + 1] == '.')
             sum++;
-            
-        sum += dfs(m, n, i - 1, j - 1);
+        
+        sum += dfs(m, n, i - 1, j);
         sum += dfs(m, n, i - 1, j + 1);
         sum += dfs(m, n, i, j - 1);
         sum += dfs(m, n, i, j + 1);
-        sum += dfs(m, n, i + 1, j - 1);
+        sum += dfs(m, n, i + 1, j);
         sum += dfs(m, n, i + 1, j + 1);
     }
-    
     
     return sum;
 }
