@@ -1,5 +1,5 @@
-// not yet corret
 #include <iostream>
+#include <cstring>
 #include <queue>
 using namespace std;
 
@@ -16,12 +16,25 @@ bool isFound(state s, int t) {
     return s.cup[0] == t || s.cup[1] == t || s.cup[2] == t || s.cup[3] == t;
 }
 
+void initV(bool v[30][30][30][30]) {
+    for(int i = 0; i < 30; i++) {
+        for(int j = 0; j < 30; j++) {
+            for(int k = 0; k < 30; k++) {
+                for(int f = 0; f < 30; f++) {
+                    v[i][j][k][f] = 0;
+                }
+            }
+        }
+    }
+}
 int main()
 {
     int c[4], t;
     
     while(cin >> c[0] >> c[1] >> c[2] >> c[3] >> t) {
-        bool v[1000] = {false};
+        bool v[30][30][30][30];
+        initV(v);
+        
         queue<state> q;
         state s0 = {{0, 0, 0, 0}, 0};
         state res;
@@ -36,7 +49,7 @@ int main()
                 break;
             }
             // empty one of the cup
-            if(!v[state_encode(curr)]) {
+            if(!v[curr.cup[0]][curr.cup[1]][curr.cup[2]][curr.cup[3]]) {
                 q.push({{0, curr.cup[1], curr.cup[2], curr.cup[3]}, curr.dist + 1});
                 q.push({{curr.cup[0], 0, curr.cup[2], curr.cup[3]}, curr.dist + 1});
                 q.push({{curr.cup[0], curr.cup[1], 0, curr.cup[3]}, curr.dist + 1});
@@ -71,9 +84,9 @@ int main()
                         }
                     }
                 }
+                v[curr.cup[0]][curr.cup[1]][curr.cup[2]][curr.cup[3]] = 1;
             }
             
-            v[state_encode(curr)] = 1;
         }
         
         if(!done)
