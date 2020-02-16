@@ -2,103 +2,89 @@
 
 using namespace std;
 
-char kingdom[100][100];
+char a[100][100];
 
 // m = # of rows, n = # of columns
-int dfs(int m, int n, int i, int j) {
-    if(i < 0 || i > m || j < 0 || j > n || kingdom[i][j] != '#')
-        return 0;
-        
-    kingdom[i][j] = 'X';
-    
+int count(int m, int n, int i, int j) {
     int sum = 0;
-    // six direction for hexagon
-    if(i % 2 == 0) {
-        if(i - 1 >= 0 && j - 1 >= 0 && kingdom[i - 1][j - 1] == '.')
+    
+    if(i % 2) { // odd (i - 1, j), (i - 1, j + 1), (i, j - 1), (i, j + 1), (i + 1, j), (i + 1, j + 1)
+        if(i - 1 >= 0 && a[i - 1][j] == '.')
             sum++;
-        if(i - 1 >= 0 && kingdom[i - 1][j] == '.')
+
+        if(i - 1 >= 0 && j + 1 < n && a[i - 1][j + 1] == '.')
             sum++;
-        if(j - 1 >= 0 && kingdom[i][j - 1] == '.')
+        
+        if(j - 1 >= 0 && a[i][j - 1] == '.')
             sum++;
-        if(j + 1 < n && kingdom[i][j + 1] == '.')
+        
+        if(j + 1 < n && a[i][j + 1] == '.')
             sum++;
-        if(i + 1 < m && j - 1 >= 0 && kingdom[i + 1][j - 1] == '.')
+        
+        if(i + 1 < m && a[i + 1][j] == '.')
             sum++;
-        if(i + 1 < m && kingdom[i + 1][j] == '.')
+        
+        if(i + 1 < m && j + 1 < n && a[i + 1][j + 1] == '.')
             sum++;
             
-        sum += dfs(m, n, i - 1, j - 1);
-        sum += dfs(m, n, i - 1, j);
-        sum += dfs(m, n, i, j - 1);
-        sum += dfs(m, n, i, j + 1);
-        sum += dfs(m, n, i + 1, j - 1);
-        sum += dfs(m, n, i + 1, j);
-    }else {
-        
-        if(i - 1 >= 0 && kingdom[i - 1][j] == '.')
+    }else { // even (i - 1, j - 1), (i - 1, j), (i, j - 1), (i, j + 1), (i + 1, j - 1), (i + 1, j)
+        if(i - 1 >= 0 && j - 1 >= 0 & a[i - 1][j - 1] == '.')
             sum++;
-        if(i - 1 >= 0 && j + 1 < n && kingdom[i - 1][j + 1] == '.')
-            sum++;
-        if(j - 1 >= 0 && kingdom[i][j - 1] == '.')
-            sum++;
-        if(j + 1 < n && kingdom[i][j + 1] == '.')
-            sum++;
-        if(i + 1 < m && kingdom[i + 1][j] == '.')
-            sum++;
-        if(i + 1 < m && j + 1 < n && kingdom[i + 1][j + 1] == '.')
+            
+        if(i - 1 >= 0 && a[i - 1][j] == '.')
             sum++;
         
-        sum += dfs(m, n, i - 1, j);
-        sum += dfs(m, n, i - 1, j + 1);
-        sum += dfs(m, n, i, j - 1);
-        sum += dfs(m, n, i, j + 1);
-        sum += dfs(m, n, i + 1, j);
-        sum += dfs(m, n, i + 1, j + 1);
+        if(j - 1 >= 0 && a[i][j - 1] == '.')
+            sum++;
+        
+        if(j + 1 < n && a[i][j + 1] == '.')
+            sum++;
+        
+        if(i + 1 < m && j - 1 >= 0 && a[i + 1][j - 1] == '.')
+            sum++;
+        
+        if(i + 1 < m && a[i + 1][j] == '.')
+            sum++;
     }
-    
     return sum;
 }
 
+void mFun() {
+    int i = 0;
+    string x[50];
+	int n = 0;
+	int m = 0;
+	while(getline(cin, x[0]))
+	{
+	    int res = 0;
+		m = 1;
+		while(getline(cin, x[m]) and x[m][0] != '\0'){
+			m ++ ;
+		}
+		
+		n = x[0].size();
+		
+		for(int i = 0; i < m; i++) {
+		    for(int j = 0; j < n; j++) {
+		        a[i][j] = x[i][j];
+		    }
+		}
+		
+	    for(int f = 0; f < m; f++) {
+            for(int g = 0; g < n; g++) {
+                if(a[f][g] == '#') {
+                    res += count(m, n, f, g);
+                    a[f][g] = 'X';
+                }
+            }
+        }
+        
+        cout << res << endl;
+	}
+}
 
 int main()
 {
-    int i = 0;
-    string s;
-    while(true) {
-        int len; 
-        int m;
-        int n;
-        getline(cin, s);
-        
-        if(!cin)
-            len = 0;
-        else 
-            len = s.length();
-            
-        if(len != 0) {
-            for(int j = 0; j < len; j++) {
-                kingdom[i][j] = s[j];
-            }
-            i++;
-            n = len;
-        }else {
-            m = i;
-            i = 0;
-              
-            int res = 0;
-            for(int f = 0; f < m; f++) {
-                for(int g = 0; g < n; g++) {
-                    if(kingdom[f][g] == '#') {
-                        res += dfs(m, n, f, g);
-                    }
-                }
-            }
-        
-            cout << res << endl;
-            if(!cin)
-                break;
-        }
-    }
-
+    mFun();
     return 0;
 }
