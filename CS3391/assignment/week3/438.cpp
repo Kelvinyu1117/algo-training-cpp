@@ -27,7 +27,7 @@ using namespace std;
     it can be observed that only these two persons have n - 2 friends, 
     the number of fds of other people remains the same.
     Now, start the leave process for k = 0 -> n - 1
-    for the 1th and nth person, they will leave at k = n - 2. the number of fd of the rest of the people = n - 2
+    for the 1th and nth person, they will leave at k = n - 2 lead to the number of fd of the rest of the people = n - 2
     when k = n - 1, as no one have n - 1 fds, no one leave 
     result in the number of people in the party = n - 2 (1th and nth have leaved)
 */
