@@ -46,7 +46,7 @@ void mFun() {
         queue<state> q;
         s.dist = 0;
         e.dist = 0;
-        
+        v[s.r][s.c] = 1;
         q.push(s);
         
         bool done = false;
@@ -62,19 +62,15 @@ void mFun() {
             }
             
             int dir[8][2] ={{-2, -1}, {2, -1}, {-1, -2}, {1, -2}, {-2, 1}, {2, 1}, {-1, 2}, {1, 2}};
-            
-            if(!v[curr.r][curr.c]) {
-                for(int i = 0; i < 8; i++) {
-                    state tmp = {curr.r, curr.c, curr.dist + 1};
-                    tmp.r += dir[i][0];
-                    tmp.c += dir[i][1];
-                    if(isValid(tmp.r, tmp.c)) {
-                        if(!v[tmp.r][tmp.c])
-                            q.push({tmp.r, tmp.c, tmp.dist});
-                    }
+           
+            for(int i = 0; i < 8; i++) {
+                state tmp = {curr.r, curr.c, curr.dist + 1};
+                tmp.r += dir[i][0];
+                tmp.c += dir[i][1];
+                if(isValid(tmp.r, tmp.c) && !v[tmp.r][tmp.c]) {
+                    q.push({tmp.r, tmp.c, tmp.dist});
+                    v[tmp.r][tmp.c] = 1;
                 }
-                
-                v[curr.r][curr.c] = 1;
             }
         }
         
