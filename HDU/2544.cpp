@@ -43,6 +43,7 @@ int dijkstra(int s, int e, int n) {
             res = curr.first;
             break;
         }
+        
         for(int i = 1; i <= n; i++) {
             int d = curr.first + g[curr.second][i];
             if(!vis[i] && d < dist[i]) {
