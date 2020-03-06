@@ -40,7 +40,10 @@ int solve(string a, string b) {
 void mFun() {
     string s1 = "";
     string s2 = "";
-    while(cin >> s1 >> s2) {
+    while(getline(cin, s1)) {
+            
+        getline(cin, s2);
+        
         int res = solve(s1, s2);
         cout << res << endl;
     }    
