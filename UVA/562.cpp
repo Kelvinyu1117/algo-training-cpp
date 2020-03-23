@@ -9,6 +9,7 @@ using namespace std;
 
 int dp[MAXN][MAXN * 500];
 int w[MAXN];
+
 int main() {
   int n;
 
