@@ -30,7 +30,7 @@ void clear() {
 int dijkstra(int s, int e, int n) {
     int res = 0;
     dist[s] = 0;
-    
+        
     priority_queue<PII,VII,greater<PII> >q;
     q.push(make_pair(dist[s], s));
     
