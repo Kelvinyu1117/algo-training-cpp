@@ -10,19 +10,20 @@
 
 using namespace std;
 struct Edge{
-  int from;
   int to;
   int weight;
 };
 
 int dist[MAX_N];
 
-vector<Edge> g(MAX_N);
+vector<vector<Edge>> g(MAX_N);
 
 
 void clear() {
-    rep(i, 0, MAX_N)
+    rep(i, 0, MAX_N) {
         dist[i] = INF;
+        g[i].clear();
+    }
     
     g.clear();
 }
@@ -31,17 +32,20 @@ bool bellmanFord(int n) {
     dist[0] = 0;
     
     rep(i, 0, n - 1) {
-        for(auto e: g) {
-           if(dist[e.from] + e.weight < dist[e.to]) {
-               dist[e.to] = dist[e.from] + e.weight; 
-           }
+        rep(j, 0, n) {
+            for(auto e: g[j]) {
+               if(dist[j] + e.weight < dist[e.to]) {
+                   dist[e.to] = dist[j] + e.weight; 
+               }
+            }
         }
     }
     
-    for(auto e: g) {
-        if(dist[e.from] + e.weight < dist[e.to]) {
-           return true;
-        }
+   
+    rep(j, 0, n) {
+        for(auto e: g[j]) 
+            if(dist[j] + e.weight < dist[e.to]) 
+                return true;
     }
     
     return false;
@@ -61,7 +65,7 @@ int main()
         for(int i = 0; i < m; i++) {
             int a, b, c;
             cin >> a >> b >> c;
-            g.push_back({a, b, c});
+            g[a].push_back({b, c});
         }
         
         bool res = bellmanFord(n);
