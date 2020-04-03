@@ -49,28 +49,39 @@ void parseInput(string line) {
     
         
     string s1 = line.substr(0, i);
+    string s2 = line.substr(i + 1);
+    string s3 = s2;
+    string s4 = s2;
     
-    int j = i;
-    for(; j < len - 1; j++)
-        if(isspace(line[j]) && isdigit(line[j + 1])) break;
-    
-    string s2 = line.substr(i + 1, j - i - 1);
-    j++;
-    
-    line = line.substr(j);
+    for(const auto &p: s2i) {
+        string ss = p.first;
+        bool yes = true;
+        for(int j = 0; j < ss.length() && yes; j++) {
+            if(ss[j] != s2[j]) 
+                yes = false;
+        }
+        
+        if(yes) {
+            s3 = s2.substr(0, ss.length());
+            s4 = s2.substr(ss.length() + 1);
+            break;
+        }
+    }
     
     stringstream ss;
-    ss << line;
+    ss << s4;
     
     int c = 0;
     int a;
     while(ss >> a) {
         if(c == 0) 
-            g[s2i[s1]][s2i[s2]] = a;
+            g[s2i[s1]][s2i[s3]] = a;
         else 
-            g[s2i[s2]][s2i[s1]] = a;
+            g[s2i[s3]][s2i[s1]] = a;
         c++;
     }
+    
+    int b = 10;
 }
 
 
