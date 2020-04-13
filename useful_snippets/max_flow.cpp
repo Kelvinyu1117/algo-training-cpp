@@ -66,7 +66,7 @@ struct Dinic {
             return currFlow;
 
         for(nextNode[s]; nextNode[s] < g[s].size(); nextNode[s]++) {
-            Edge ed = g[s][nextNode[s]];
+            Edge &ed = g[s][nextNode[s]];
 
             if(level[ed.next] == level[s] + 1 && ed.flow < ed.cap) {
                 int nextFlow = min(currFlow, ed.cap - ed.flow);
@@ -114,6 +114,7 @@ void m() {
         }
         
         int res = dinic.max_flow(0, n - 1);
+        cout << res << endl;
     }
 }
 int main() {
