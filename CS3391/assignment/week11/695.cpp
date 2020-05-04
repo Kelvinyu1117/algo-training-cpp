@@ -13,7 +13,7 @@ class BigNum
 { 
        
 public: 
-    int a[500];    
+    int a[1500];    
     int len; 
     BigNum(){ len = 1;memset(a,0,sizeof(a)); }   
     BigNum(const int);       
@@ -34,7 +34,8 @@ public:
     bool   operator>(const BigNum & T)const; 
     bool   operator>(const int & t)const;      
     
-    void print();       
+    void print();
+    string toString();
 }; 
 BigNum::BigNum(const int b)    
 { 
@@ -122,7 +123,7 @@ ostream& operator<<(ostream& out,  BigNum& b){
 BigNum BigNum::operator+(const BigNum & T) const
 {
     BigNum t(*this);
-    int i,big;      //位數   
+    int i,big;      
     big = T.len > len ? T.len : len; 
     for(i = 0 ; i < big ; i++) 
     { 
@@ -299,6 +300,35 @@ void BigNum::print()
     cout << endl;
 }
 
+
+
+
+string BigNum::toString() 
+{
+    string res = "";
+    for(int i = len - 1; i >= 0; i--) {
+        string tmp = to_string(a[i]);
+        
+        for(int j = 0; j < 4 - tmp.length(); j++) {
+            res += '0';
+        }
+        
+        res += tmp;
+    }
+    
+    return res;
+}
+
+BigNum pow( BigNum a, int b ) {
+    BigNum res( 1 );
+    while( b ) {
+        if( b % 2 == 1 ) res = res * a;
+        a = a * a;
+        b = b / 2;
+    }
+    return res;
+}
+
 void m() {
     string base, expo;
     
@@ -310,32 +340,78 @@ void m() {
         
         int pt = base.find('.');
         
-        string tmp = base;
-        BigNum a = (tmp.erase(pt, 1)).c_str();
+        // remove the zero before the decimal point
+        int j = 0;
+        while (j != pt) {
+            if (base[j] == '0') base.erase(j, 1);
+            else break;
+        }
         
-        pt = (base.length() - pt - 1);
+        // remove the zero after the decimal point
+        reverse(base.begin(), base.end());
+        while (j != pt) {
+            if (base[j] == '0') base.erase(j, 1);
+            else break;
+        }
         
-        BigNum b = a ^ stoi(expo);
+        int tt = base.find('.');
         
-        int i, j;
+     
+        
+        string tmp = base.erase(tt, 1);
+        
+        reverse(tmp.begin(), tmp.end());
+        BigNum a = tmp.c_str();
         
         
-        for(i = b.len - 1 ; i >= pt ; i--)
-        { 
-                cout << b.a[i]; 
-        } 
+        
+        BigNum b = pow(a, stoi(expo));
+        
+        string res = b.toString();
+        
+        int new_pt = tt * stoi(expo);
+        
+        reverse(res.begin(), res.end());
+        
+        if(new_pt >= res.length()) {
+            int zero_needed = new_pt - res.length();
+            for (int i = 0;i < zero_needed;i++) { 
+                res = res + '0';
+            }   
             
-        for(j = 0; b.a[j] == 0; j++);
-            
-        if(i > j) cout << ".";
-    		
-    	for(i = pt - 1; i >= j; i--) cout << b.a[i];
-    		
-    	cout << endl;
+            res = res + '.';
+        }else {
+            res.insert(new_pt, 1, '.'); 
+        }
+        
+        if(!tt) 
+            res.erase(0, 1);
+        
+        reverse(res.begin(), res.end());
+    
+    
+        pt = res.find('.');
+        
+        // remove the zero before the decimal point
+        j = 0;
+        while (j != pt) {
+            if (res[j] == '0') res.erase(j, 1);
+            else break;
+        }
+        
+        // remove the zero after the decimal point
+        reverse(res.begin(), res.end());
+        while (j != pt) {
+            if (res[j] == '0') res.erase(j, 1);
+            else break;
+        }
+        
+        reverse(res.begin(), res.end());
+        cout << res << endl;
     }
 }
 
 int main() {
     m();
     return 0;
-}
+}s
