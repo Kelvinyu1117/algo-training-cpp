@@ -110,8 +110,8 @@ void m() {
         if(!n && !m) return;
         Dinic dinic;
         
-        long long s = 0;
-        long long t = n + 1;
+        long long s = 2 * n ;
+        long long t = 2 * n + 1;
         
         dinic.n = n;
         dinic.m = m;

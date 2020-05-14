@@ -42,18 +42,18 @@ ll ex_gcd(ll a, ll b, ll &x, ll &y)
     return ans;
 }
 
-void ABC()
+void mFun()
 {
     ll x, y, m, n, l;
-    while (scanf("%lld %lld %lld %lld %lld", &x, &y, &m, &n, &l) != EOF)
+    while (cin >> x >> y >> m >> n >> l)
     {
         g = n - m; u = x - y;
 		ll ta, tb;
 		ll r = ex_gcd(g, l, ta, tb);
-		if (u%r != 0) 
+		if ((x - y) % r != 0) 
 			cout << "Impossible" << endl;
 		else {
-			g /= r; u /= r; l /= r;
+			g /= r;  u = (x - y)/ r; l /= r;
 			ex_gcd(g, l, s, k);
 			s *=u;
 			k *=u;
@@ -71,5 +71,5 @@ void ABC()
 
 
 int main() {
-    ABC();
+    mFun();
 }

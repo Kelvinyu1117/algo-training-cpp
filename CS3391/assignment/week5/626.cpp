@@ -1,9 +1,10 @@
 
 #include <iostream>
+#include <vector>
 #include <math.h>
 
 using namespace std;
-int dp[1000005];
+vector<int> dp(1000005);
 /* 
     the state dp[i] represents dp[i] different ways there are to hold those i items
     initially, the dp[i] must be 1, as the 2^x = 1, for x = 0, and x must be <= n

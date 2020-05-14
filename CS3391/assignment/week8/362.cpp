@@ -111,22 +111,24 @@ void m() {
         
         
         for(int i = 0; i < N; i++) {
-            
-            dinic.AddEdge(i * 2, i * 2 + 1, 1);
+            int tmpA = i * 2;
+            dinic.AddEdge(tmpA, tmpA + 1, 1);
             
             if(tB[i] - D <= 0) {
-                dinic.AddEdge(s, i * 2, 1);
-                dinic.AddEdge(i * 2, s, 0);
+              
+                dinic.AddEdge(s, tmpA, 1);
+                dinic.AddEdge(tmpA, s, 0);
             }
             if(tB[i] + D >= W) {
-                dinic.AddEdge(i * 2 + 1, t, 1);
-                dinic.AddEdge(t, i * 2 + 1, 0);
+                dinic.AddEdge(tmpA + 1, t, 1);
+                dinic.AddEdge(t, tmpA + 1, 0);
             }
             
             for (int j = 0; j < i; j++) {
+                int tmpB = j * 2;
                 if((tA[i] - tA[j]) * (tA[i] - tA[j]) + (tB[i] - tB[j]) * (tB[i] - tB[j]) <= D * D * 4) {
-                    dinic.AddEdge(i * 2 + 1, j * 2, 1);
-					dinic.AddEdge(j * 2 + 1, i * 2, 1);
+                    dinic.AddEdge(tmpA + 1, tmpB, 1);
+					dinic.AddEdge(tmpB + 1, tmpA, 1);
                 }
             }
         }
@@ -140,6 +142,8 @@ void m() {
 
 int main()
 {
+    ios_base::sync_with_stdio(false);
+	  cin.tie(NULL);  
    
     m();
     return 0;
